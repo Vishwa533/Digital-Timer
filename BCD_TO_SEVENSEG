@@ -1,0 +1,39 @@
+module bcdtosevenseg(lsb,msb,minute);
+input [5:0]minute;
+output reg [3:0]lsb;
+output reg [3:0]msb;
+always @(*)
+begin
+lsb=minute/10;
+case(lsb)
+6'd0:lsb=7'd0;
+6'd1:lsb=7'd1;
+6'd2:lsb=7'd2;
+6'd3:lsb=7'd3;
+6'd4:lsb=7'd4;
+6'd5:lsb=7'd5;
+6'd6:lsb=7'd6;
+6'd7:lsb=7'd7;
+6'd8:lsb=7'd8;
+6'd9:lsb=7'd9;
+
+endcase
+end
+always @(*)
+begin
+msb=minute%10;
+case(msb)
+6'd0:msb=7'd0;
+6'd1:msb=7'd1;
+6'd2:msb=7'd2;
+6'd3:msb=7'd3;
+6'd4:msb=7'd4;
+6'd5:msb=7'd5;
+6'd6:msb=7'd6;
+6'd7:msb=7'd7;
+6'd8:msb=7'd8;
+6'd9:msb=7'd9;
+
+endcase
+end
+endmodule
