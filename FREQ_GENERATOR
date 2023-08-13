@@ -1,0 +1,25 @@
+//Frequency generator 1KHz
+module freq1hhz(clk_out,reset,clk_in);
+input clk_in,reset;
+reg [27:0]count;//for 50mhz frequency
+output reg clk_out=0;
+always @(posedge clk_in or negedge reset)
+begin
+if(!reset)
+begin
+count<=28'b0;
+clk_out<=0;
+end
+else
+begin
+count=count+1;
+if(count==28'd25000000)//half of clock then invert
+clk_out=~clk_in;
+else if(count==28'd50000000)//complete 1 clock over
+begin
+count<=28'b0;
+clk_out=~clk_in;
+end
+end
+end
+endmodule
