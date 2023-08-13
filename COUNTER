@@ -1,0 +1,40 @@
+module counterr(second,minute,min_lsb,min_msb,second_lsb,second_msb,hour_lsb,hour_msb,hour,reset,clk);
+input reset,clk;
+//input [6:0]ul;
+output reg [5:0]second=6'd0;
+output reg [5:0]minute=6'd0;
+output reg [5:0]hour=6'd0;
+wire clk_1hz;
+output [3:0]min_lsb;
+output [3:0]min_msb;
+output [3:0]hour_lsb;
+output [3:0]hour_msb;
+output [3:0]second_lsb;
+output [3:0]second_msb;
+freq1hz f1(clk_1hz,reset,clk);
+always @(posedge clk_1hz or negedge reset)
+begin
+if(!reset)
+second<=0;
+else
+begin
+second<=second+1;
+if(second==6'b111011)// 60 secound
+begin
+second<=0;
+minute=minute+1;
+end
+else if(minute==6'b111011)// 60 minute 
+hour=hour+1;
+second<=0;
+end
+end
+
+//for second
+bcdtosevenseg seg_second(second_lsb,second_msb,second);
+//for minute
+bcdtosevenseg seg_minute(min_lsb,min_msb,minute);
+//for hour
+bcdtosevenseg seg_hour(hour_lsb,hour_msb,hour);
+
+endmodule
